@@ -1,6 +1,7 @@
 <p>recipe-search works!</p>
 
 <button type="button" (click)="searchRecipes()">Get recipes</button>
+
 @for (recipe of recipes; track recipe) {
     <article>  
         <h2>{{ recipe.label }}</h2>
@@ -15,4 +16,5 @@
     </article>
     } @empty {
     <p>There are no recipes...</p>
+
     }
