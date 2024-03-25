@@ -30,20 +30,25 @@ export class RecipeSearchComponent implements OnInit{
 
   ngOnInit(): void {}
 
-  searchRecipes() {
-    // Call the service method with search parameters
-    this.edamamService.searchRecipes(this.query, this.cuisineType, this.mealType, this.health)
-      .subscribe((res: any) => {
-        console.log(res);
-        let recipeArray: any[] = res.hits.map((hit: any) => hit.recipe);
-        console.log(recipeArray);
-        this.recipes = recipeArray.map((recipe: any) => ({
-          label: recipe.label,
-          image: recipe.image,
-          totalTime: recipe.totalTime,
-          ingredientLines: recipe.ingredientLines
-        }));
-        console.table(this.recipes);
-      });
-  }
+searchRecipes(){
+  this.edamamService.getRecipe('chicken').subscribe((res) =>{
+    console.log(res);
+    let recipeArray: any[];
+    recipeArray = res.hits;
+    console.log(recipeArray);
+
+    let recipes = recipeArray.map(item => {
+        return {
+          //self: item._links.self.href,
+          label: item.recipe.label,
+          image: item.recipe.image,
+          totalTime: item.recipe.totalTime,
+          ingredientLines: item.recipe.ingredientLines
+        }
+    });
+    console.table(recipes);
+    this.recipes = recipes;
+  // this.edamamService.searchRecipes(this.query);
+ });
+}
 }
