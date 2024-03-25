@@ -5,7 +5,7 @@
     <article>  
         <h2>{{ recipe.label }}</h2>
         <img src="{{recipe.image}}">
-        <p>{{recipe.totalTime}}</p>
+        <p class="bg-red-400">{{recipe.totalTime}}</p>
         <p>{{recipe.self}}</p>
         <ul>
             @for (ingredientLine of recipe.ingredientLines; track ingredientLine) {
