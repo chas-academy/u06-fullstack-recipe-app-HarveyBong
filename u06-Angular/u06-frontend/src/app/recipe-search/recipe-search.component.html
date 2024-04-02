@@ -1,20 +1,31 @@
 <p>recipe-search works!</p>
 
-<button type="button" (click)="searchRecipes()">Get recipes</button>
-
-@for (recipe of recipes; track recipe) {
-    <article>  
-        <h2>{{ recipe.label }}</h2>
-        <img src="{{recipe.image}}">
-        <p class="bg-red-400">{{recipe.totalTime}}</p>
-        <p>{{recipe.self}}</p>
-        <ul>
-            @for (ingredientLine of recipe.ingredientLines; track ingredientLine) {
-            <li>{{ingredientLine}}</li>
-            }
+<div class="flex justify-center py-2 ">
+<input type="text" [(ngModel)]="query" placeholder="SEARCH FOOD" class=" w-1/2 rounded border mx-2 p-2">
+<button class="bg-slate-400 px-2 border rounded hover:bg-slate-600" (click)="searchRecipes()">Search Recipes</button>
+</div>
+<div class= "flex justify-center">
+<div class="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4">
+    <!-- Loop through recipes -->
+    <ng-container *ngFor="let recipe of recipes; let i = index">
+      <div class="bg-white rounded shadow p-4" *ngIf="recipes.length > 0">
+        <h2 class="text-xl font-bold">{{ recipe.label }}</h2>
+        <img [src]="recipe.image" alt="Recipe Image" class="mt-2 w-full">
+        <p class="bg-red-400 text-white px-2 py-1 rounded mt-2">Estimated time: {{ recipe.totalTime }}</p>
+        <p class="bg-red-400 text-white px-2 py-1 rounded mt-2">Allergy: {{ recipe.healthLabels }}</p>
+        <ul class="mt-2">
+          <!-- Loop through ingredient lines -->
+          <li *ngFor="let ingredientLine of recipe.ingredientLines; let j = index">
+            {{ ingredientLine }}
+          </li>
         </ul>
-    </article>
-    } @empty {
-    <p>There are no recipes...</p>
-
-    }
+      </div>
+      <!-- If recipes array is empty -->
+      <ng-container *ngIf="recipes.length === 0 && i === 0">
+        <div class="bg-white rounded shadow p-4 col-span-3">
+          <p class="text-center">There are no recipes...</p>
+        </div>
+      </ng-container>
+    </ng-container>
+</div>
+  </div>

@@ -1,12 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, input } from '@angular/core';
 
 import { Router } from '@angular/router';
 import { EdamamService } from '../services/edamam.service';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-recipe-search',
   standalone: true,
-  imports: [],
+  imports: [FormsModule,CommonModule],
   templateUrl: './recipe-search.component.html',
   styleUrl: './recipe-search.component.css'
 })
@@ -26,28 +28,34 @@ export class RecipeSearchComponent implements OnInit{
     private router:Router
   ){}
 
- 
+ userInput(input: string){
+  let query;
+  this.query=input;
+  return input;
+ }
 
   ngOnInit(): void {}
 
 searchRecipes(){
-  this.edamamService.getRecipe('chicken').subscribe((res) =>{
-    console.log(res);
-    let recipeArray: any[];
-    recipeArray = res.hits;
-    console.log(recipeArray);
+  // Assuming you have already defined userInput method correctly in your class
+  const query = this.userInput(this.query); // Capture the query input
 
-    let recipes = recipeArray.map(item => {
-        return {
-          //self: item._links.self.href,
-          label: item.recipe.label,
-          image: item.recipe.image,
-          totalTime: item.recipe.totalTime,
-          ingredientLines: item.recipe.ingredientLines
-        }
+  this.edamamService.getRecipe(query).subscribe((res) => {
+    console.log(res);
+    const recipeArray: any[] = res.hits.map((item: any) => {
+      return {
+        label: item.recipe.label,
+        image: item.recipe.image,
+        totalTime: item.recipe.totalTime,
+        ingredientLines: item.recipe.ingredientLines,
+        healthLabels: item.recipe.healthLabels,
+        
+      };
     });
-    console.table(recipes);
-    this.recipes = recipes;
+
+    console.table(recipeArray);
+    this.recipes = recipeArray;
+  
   // this.edamamService.searchRecipes(this.query);
  });
 }
