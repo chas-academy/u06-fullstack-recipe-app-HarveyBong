@@ -1,15 +1,41 @@
-<p>recipe-search works!</p>
 
 
-<div class="flex justify-center py-2 ">
-<input type="text" [(ngModel)]="query" placeholder="SEARCH FOOD" class=" w-1/2 rounded border mx-2 p-2">
-<button class="bg-slate-400 px-2 border rounded hover:bg-slate-600" (click)="searchRecipes()">Search Recipes</button>
+
+<div class="search-container">
+  
+  <div class="flex justify-center">
+  <input class="w-1/2 border rounded-sm shadow" type="text" id="searchTerm" placeholder="What do you want to eat?" [(ngModel)]="searchTerm">
 </div>
-<div class= "flex justify-center">
-<div class="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4">
+
+  <button (click)="searchRecipes()">Get Recipes</button>
+
+
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+  @for(recipe of recipes; track recipe){
+    <article class="bg-white rounded-lg shadow-lg">
+      <img class="rounded-t-lg" src="{{recipe.image}}" alt="{{recipe.label}}">
+      <div class="p-4">
+        <h3 class="text-xl font-semibold">{{recipe.label}}</h3>
+        <p class="mt-2 text-gray-600">Time to cook: {{recipe.totalTime}}</p>
+        <p class="">CAUTIONS! WARINING: {{recipe.healthLabels}} </p>
+        <div class="mt-4">
+          <a href="/recipe/{{recipe.self | recipebyid}}" class="text-blue-500 font-semibold hover:text-blue-700">Go to recipe</a>
+        </div>
+      </div>
+    </article>
+  }@empty{
+    <p class="text-center text-gray-600"></p>
+  }
+</div>
+
+
+
+<!-- <div class= "flex justify-center">
+<div class="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4"> -->
     <!-- Loop through recipes -->
-    <ng-container *ngFor="let recipe of recipes; let i = index">
+    <!-- <ng-container *ngFor="let recipe of recipes; let i = index">
       <div class="bg-white rounded shadow p-4" *ngIf="recipes.length > 0">
+        
         <a class="text-xl font-bold hover:bg-slate-400"
         routerLink="/recipe/{recipe.id}"
         routerLinkActive="active"
@@ -19,7 +45,7 @@
         <p class="bg-red-400 text-white px-2 py-1 rounded mt-2">Allergy: {{ recipe.healthLabels }} </p>
         <p class="bg-red-400 text-white px-2 py-1 rounded text-sm mt-2">Allergy: {{ recipe.uri }} </p>
         <ul class="mt-2">
-          <!-- Loop through ingredient lines -->
+      
           <li *ngFor="let ingredientLine of recipe.ingredientLines; let j = index">
             {{ ingredientLine }}
           </li>
@@ -33,4 +59,4 @@
       </ng-container>
     </ng-container>
 </div>
-  </div>
+  </div> -->

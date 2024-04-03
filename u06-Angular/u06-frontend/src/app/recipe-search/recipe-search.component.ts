@@ -1,14 +1,16 @@
 import { Component, OnInit, input } from '@angular/core';
 
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { EdamamService } from '../services/edamam.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { RecipebyidPipe } from '../pipes/recipebyid.pipe';
+import { RecipeResponse } from '../interfaces/recipe';
 
 @Component({
   selector: 'app-recipe-search',
   standalone: true,
-  imports: [FormsModule,CommonModule],
+  imports: [FormsModule,CommonModule,RecipebyidPipe,RouterLink],
   templateUrl: './recipe-search.component.html',
   styleUrl: './recipe-search.component.css'
 })
@@ -21,7 +23,8 @@ export class RecipeSearchComponent implements OnInit{
   mealType: string = ''; // breakfast, lunch, dinner etc
   health: string = ''; //allergy
   recipes: any[] = [];
-
+  searchTerm: string = '';
+  recipe: RecipeResponse[] = [];
 
   constructor(
     private edamamService:EdamamService,
@@ -36,29 +39,38 @@ export class RecipeSearchComponent implements OnInit{
 
   ngOnInit(): void {}
 
-searchRecipes(){
-  // Assuming you have already defined userInput method correctly in your class
-  const query = this.userInput(this.query); // Capture the query input
+  searchRecipes() {
+    this.edamamService.searchRecipes(this.searchTerm).subscribe((res) => {
+      console.table(res);
 
-  this.edamamService.getRecipe(query).subscribe((res) => {
-    console.log(res);
-    const recipeArray: any[] = res.hits.map((item: any) => {
-      return {
-        label: item.recipe.label,
-        image: item.recipe.image,
-        totalTime: item.recipe.totalTime,
-        ingredientLines: item.recipe.ingredientLines,
-        healthLabels: item.recipe.healthLabels,
-        uri: item.recipe.uri,
-       
-        
-      };
+      let recipes: RecipeResponse[];
+      recipes = res.hits.map(
+        (item: {
+          recipe: {
+            label: any;
+            image: any;
+            ingredientLines: any;
+            totalTime: any;
+            yield: any;
+            cautions:any;
+            healthLabels:any;
+          };
+          _links: { self: { href: any } };
+        }) => {
+          return {
+            label: item.recipe.label,
+            image: item.recipe.image,
+            ingredientLines: item.recipe.ingredientLines,
+            totalTime: item.recipe.totalTime,
+            yield: item.recipe.yield,
+            self: item._links.self.href,
+            cautions: item.recipe.cautions,
+            healthLabels:item.recipe.healthLabels
+          };
+        }
+      );
+      console.log(recipes);
+      this.recipes = recipes;
     });
-
-    console.table(recipeArray);
-    this.recipes = recipeArray;
-  
-  // this.edamamService.searchRecipes(this.query);
- });
-}
+  }
 }
