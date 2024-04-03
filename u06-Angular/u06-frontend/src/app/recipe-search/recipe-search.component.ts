@@ -49,6 +49,8 @@ searchRecipes(){
         totalTime: item.recipe.totalTime,
         ingredientLines: item.recipe.ingredientLines,
         healthLabels: item.recipe.healthLabels,
+        uri: item.recipe.uri,
+       
         
       };
     });
