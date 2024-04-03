@@ -1,34 +1,35 @@
 
 
-<nav>
-  <ul>
-    <li>
-      <input type="text" placeholder="Search Recipe" #filter>
-      <a
+
+<!--<input class="outline-none" type="text" placeholder="Search" />-->
+
+<nav class="flex bg-black items-center  text-white  h-16  ">
+  
+    
+
+      <a class="hover:bg-slate-500 flex-1 text-center"
       
         routerLink="/search"
         routerLinkActive="active"
         ariaCurrentWhenActive="page"
         >Search</a
       >
-    </li>
-    <li>
-      <a
+    
+    
+      <a class="hover:bg-slate-500 flex-1 text-center"
         routerLink="/recipe"
         routerLinkActive="active"
         ariaCurrentWhenActive="page"
         >Recipe</a
       >
-    </li>
-    <li>
-      <a
+
+      <a class="hover:bg-slate-500 flex-1 text-center"
         routerLink="/profile"
         routerLinkActive="active"
         ariaCurrentWhenActive="page"
         >Profile</a
       >
-    </li>
-  </ul>
+    
 </nav>
 
-<router-outlet></router-outlet><router-outlet />
+<router-outlet></router-outlet>
