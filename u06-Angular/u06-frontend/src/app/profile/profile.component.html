@@ -1,10 +1,2 @@
 <p>profile works!</p>
 
-@if (currentUser$ | async; as currentUser) {
-<div>
-  <p>{{ currentUser.name }}</p>
-  <p>{{ currentUser.email }}</p>
-</div>
-} @else {
-<p>Loading...</p>
-}

@@ -19,10 +19,10 @@ export class ProfileComponent implements OnInit {
   constructor(private auth: AuthService) {}
 
   ngOnInit(): void {
-    this.getUser();
+    /*this.getUser();*/
   }
 
-  getUser() {
+ /* getUser() {
     this.auth.getCurrentUser().subscribe({
       next: (user: User) => {
         console.log('User:', user);
@@ -32,5 +32,5 @@ export class ProfileComponent implements OnInit {
         console.error('Error fetching current user:', error);
       },
     });
-  }
+  }*/
 }

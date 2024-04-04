@@ -25,11 +25,11 @@ export class AppComponent {
 
   user?: User;
 
-  loginDetails: Login;
+ // loginDetails: Login;
 
-  loggedIn$: Observable<LoggedInUser>;
+ // loggedIn$: Observable<LoggedInUser>;
 
-  constructor(private auth: AuthService) {
+ /* constructor(private auth: AuthService) {
     this.loginDetails = {
       email: 'felix@felix.se',
       password: '12345678',
@@ -37,6 +37,7 @@ export class AppComponent {
 
     this.loggedIn$ = this.auth.loggedIn$;
   }
+  */
 
 
 

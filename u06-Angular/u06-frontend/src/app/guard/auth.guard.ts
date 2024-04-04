@@ -8,4 +8,6 @@ export const authGuard: CanActivateFn = (route, state) => {
   console.log(auth.getLoginStatus());
 
   return auth.getLoginStatus();
+
+  
 };
