@@ -7,8 +7,8 @@ import { Observable } from 'rxjs';
 import { RecipebyidPipe } from './pipes/recipebyid.pipe';
 import { AuthService } from './services/auth.service';
 import { User } from './interfaces/user';
-import { Login } from './interfaces/login';
-import { LoggedInUser } from './interfaces/logged-in-user';
+
+
 
 @Component({
   selector: 'app-root',
@@ -23,7 +23,7 @@ export class AppComponent {
   recipes: RecipeResponse[] = [];
  
 
-  user?: User;
+  //user?: User;
 
  // loginDetails: Login;
 

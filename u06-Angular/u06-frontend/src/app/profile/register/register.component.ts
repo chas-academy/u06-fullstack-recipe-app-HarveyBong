@@ -1,44 +1,43 @@
 import { Component, NgModule } from '@angular/core';
 import { Registerdetails } from '../../interfaces/register';
 import { AuthService } from '../../services/auth.service';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {  FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
+import { Register } from '../../models/register.model';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [FormsModule, CommonModule, ReactiveFormsModule],
+  imports: [FormsModule, CommonModule, ReactiveFormsModule, HttpClientModule, RouterLink],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
 
 export class RegisterComponent {
-  form = new FormGroup({
-    name: new FormControl(''),
-    email: new FormControl(''),
-    password: new FormControl(''),
-    password_confirmation: new FormControl('')
-  })
-  
-  // Register 
-  
-  registerDetails: Registerdetails;
-  
-  constructor(private auth: AuthService) {
-    this.registerDetails = {
-      name:"",
-      email:"", 
-      password:"", 
-      password_confirmation:"",
-      
-    }
-  
+  registerObj: Register;
+  constructor(private router: Router, private authService: AuthService) {
+    this.registerObj = new Register();
   }
-  register(){
-    this.auth.registerUser(this.form.value)
-    console.log('Register success')
+  onRegister() {
+    console.log(this.registerObj);
+    this.authService.postRegister(this.registerObj)?.subscribe({
+      next: (res) => {
+        console.log(res);
+        if (res.token) {
+          localStorage.setItem('token', res.token);
+
+          console.log(localStorage.getItem('token'));
+
+          alert('Register Success');
+          this.router.navigateByUrl('/login')
+
+        } else {
+          alert(res.message);
+        }
+      }
+    })
   }
-  
   
   }
