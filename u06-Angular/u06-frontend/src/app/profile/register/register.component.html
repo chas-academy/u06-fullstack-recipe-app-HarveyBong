@@ -1,0 +1,24 @@
+<div class="flex justify-center items-center h-screen shadow-md drop-shadow-sm">
+    <div class="bg-slate-600 p-6 rounded-lg shadow-lg w-96">
+      <h5 class="text-white text-2xl mb-4">Register</h5>
+      <form [formGroup]="form" (submit)="register()">
+        <div class="mb-4">
+          <label for="name" class="text-white block mb-2 ">Name</label>
+          <input type="text" class="form-input w-full rounded-md px-2" id="name" name="name" formControlName="name">
+        </div>
+        <div class="mb-4">
+          <label for="email" class="text-white block mb-2">Email address</label>
+          <input type="email" class="form-input w-full rounded-md px-2" id="email" name="email" formControlName="email">
+        </div>
+        <div class="mb-4">
+          <label for="password" class="text-white block mb-2">Password</label>
+          <input type="password" class="form-input w-full rounded-md px-2" id="password" name="password" formControlName="password">
+        </div>
+        <div class="mb-4">
+          <label for="password-Confirmation" class="text-white block mb-2">Confirm Password</label>
+          <input type="password" class="form-input w-full rounded-md px-2" id="password_confirmation" name="password_confirmation" formControlName="password_confirmation">
+        </div>
+        <button type="submit" redirect=" " class="bg-white text-orange-500 py-2 px-4 rounded-lg">Register</button>
+      </form>
+    </div>
+  </div>

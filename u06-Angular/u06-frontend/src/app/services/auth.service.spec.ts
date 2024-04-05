@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { EdamamService } from './edamam.service';
+import { AuthService } from './auth.service';
 
-describe('EdamamService', () => {
-  let service: EdamamService;
+describe('AuthService', () => {
+  let service: AuthService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(EdamamService);
+    service = TestBed.inject(AuthService);
   });
 
   it('should be created', () => {
