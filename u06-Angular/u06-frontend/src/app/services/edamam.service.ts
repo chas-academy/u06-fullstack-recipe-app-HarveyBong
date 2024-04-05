@@ -8,7 +8,7 @@ import { RecipeSearchComponent } from '../recipe-search/recipe-search.component'
 })
 export class EdamamService {
 
-  private baseUrl = 'https://api.edamam.com/api/recipes/v2?type=public';
+  private baseUrl = 'https://main--u06-recipe-harveybong.netlify.app/api.edamam.com/api/recipes/v2/';
 
   //'https://api.edamam.com/api/recipes/v2?type=public&q=chicken&app_id=a48ffb7f&app_key=%205957a6ea474c03ca1437ec73df657ae5&health=peanut-free&health=pescatarian&health=pork-free&mealType=Dinner'
 
@@ -54,7 +54,7 @@ export class EdamamService {
 
   getRecipeById(id?: string): Observable<any> {
     let url =
-      'https://api.edamam.com/api/recipes/v2/' +
+      'https://main--u06-recipe-harveybong.netlify.app/api.edamam.com/api/recipes/v2/' +
       id +
       '?type=public' +
       '&app_id=' +
