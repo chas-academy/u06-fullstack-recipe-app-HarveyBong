@@ -1,15 +1,16 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, EMPTY, Observable, Subject, catchError, map, throwError } from 'rxjs';
-import { RegisteredUser } from '../interfaces/registered-user';
+
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { LoggedInUser } from '../interfaces/logged-in-user';
-import { Registerdetails } from '../interfaces/register';
-import { Login } from '../interfaces/login';
-import { User } from '../interfaces/user';
-import { RegisterComponent } from '../profile/register/register.component';
+
+
+
 import { Register } from '../models/register.model';
+import { Login } from '../models/login.model';
 
-
+@Injectable({
+  providedIn: 'root',
+})
 
 export class AuthService {
   private tokenState: BehaviorSubject<boolean>
@@ -27,12 +28,12 @@ export class AuthService {
   postLogin(loginObj: Login) {
     if (!loginObj) return
     console.log(loginObj);
-    return this.http.post<any>('https://flavory-recipe-app.onrender.com/api/login', loginObj)
+    return this.http.post<any>('http://localhost:4200/login', loginObj)
   }
   postRegister(registerObj: Register) {
     if (!registerObj) return
     console.log(registerObj);
-    return this.http.post<any>('https://flavory-recipe-app.onrender.com/api/register', registerObj)
+    return this.http.post<any>('http://localhost:4200/register', registerObj)
   }
   postLogout(token: any) {
     const headers = {
@@ -41,7 +42,7 @@ export class AuthService {
       'Authorization': `Bearer ${token}`
     }
     console.log(headers);
-    return this.http.post<any>('https://flavory-recipe-app.onrender.com/api/logout', {}, {
+    return this.http.post<any>('http://localhost:4200/logout', {}, {
       headers
     })
   }
@@ -52,9 +53,7 @@ interface ResultData {
   token: string
 }
 
-@Injectable({
-  providedIn: 'root',
-})
+
 export class AuthService {
   getLoginStatus(): any {
     throw new Error('Method not implemented.');

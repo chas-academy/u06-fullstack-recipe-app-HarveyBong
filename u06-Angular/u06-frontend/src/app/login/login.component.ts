@@ -1,54 +1,41 @@
 import { Component } from '@angular/core';
-import { Login } from '../interfaces/login';
 import { AuthService } from '../services/auth.service';
-import { Observable } from 'rxjs';
-import { User } from '../interfaces/user';
+
 import { AsyncPipe } from '@angular/common';
+import { Login} from '../models/login.model';
+import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [AsyncPipe],
+  imports: [AsyncPipe,FormsModule,HttpClientModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
-  loginDetails: Login;
-
-  user: User;
-
-  loggedIn$: Observable<boolean>;
-
-  constructor(private auth: AuthService){
-    this.loginDetails = {
-      email:"felixnagy@live.se",
-      password:"12345678"
-    }
-
-    this.user = {
-      id:-1,
-      name:"",
-      email:"",
-      created_at:"",
-
-
-    }
-
-    this.loggedIn$ = this.auth.loggedIn$;
+  loginObj: Login;
+  constructor(private router: Router, private authService: AuthService) {
+    this.loginObj = new Login();
+    console.log(this.loginObj);
   }
+  onLogin() {
+    this.authService.postLogin(this.loginObj)?.subscribe({
+      next: (res) => {
+        console.log(res);
+        if (res.token) {
+          localStorage.setItem('token', res.token);
+          this.authService.updateTokenState()
+          console.log(localStorage.getItem('token'));
 
-  login(){
-    this.auth.loginUser(this.loginDetails);
-  }
-  logout(){
-    this.auth.logOut();
-  }
+          alert('Login Success');
+          this.router.navigateByUrl('')
 
-  getUser(){
-    this.auth.getUser2().subscribe(res => {
-      console.log(res[0]);
-      this.user = res[0];
-      this.user.welcomeMessage = `Welcome ${this.user.name}`;
+        } else {
+          alert(res.message);
+        }
+      }
     })
-  }
+}
 }
