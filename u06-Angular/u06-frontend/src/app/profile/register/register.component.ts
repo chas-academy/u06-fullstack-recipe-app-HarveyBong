@@ -12,6 +12,7 @@ import { RouterOutlet } from '@angular/router';
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
+
 export class RegisterComponent {
   form = new FormGroup({
     name: new FormControl(''),

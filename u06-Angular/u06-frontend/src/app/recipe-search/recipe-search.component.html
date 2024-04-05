@@ -1,34 +1,84 @@
+<div class="max-w-lg mx-auto py-10">
+  <div class="flex shadow-md rounded-e-lg">
+    <div class="relative w-full">
+      <input
+        type="text"
+        id="searchTerm"
+        placeholder="What do you want to eat?"
+        [(ngModel)]="searchTerm"
+        class="  block rounded-l p-2.5 w-full text-sm text-gray-900 bg-gray-100 rounded-e-lg active:bg-gray-100 focus:outline-none focus:shadow  "
+      />
+      <button
+        (click)="searchRecipes()"
+        class="absolute top-0 end-0  px-6  text-sm font-medium h-full text-white bg-teal-700 rounded-e-lg hover:bg-teal-900"
+      >
+        <svg
+          class="w-4 h-4"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 20 20"
+        >
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+          />
+        </svg>
+        <span class="sr-only">Search</span>
+      </button>
+    </div>
+  </div>
 
-
-
-<div class="search-container">
+  <!--
+<div class="search-container py-5">
+  <div class="flex justify-center items-center flex-col">
+    <input
+      class="w-1/2 border rounded-sm shadow py-2 my-10 px-2"
+      type="text"
+      id="searchTerm"
+      placeholder="What do you want to eat?"
+      [(ngModel)]="searchTerm"
+    />
+    <div class="flex justify-start">
+      
+      <button
+        class="bg-white hover:bg-gray-500 border shadow text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ml-4"
+        (click)="searchRecipes()"
+      >
+        Get Recipes
+      </button>
+    </div>
   
-  <div class="flex justify-center">
-  <input class="w-1/2 border rounded-sm shadow" type="text" id="searchTerm" placeholder="What do you want to eat?" [(ngModel)]="searchTerm">
+  </div>
+</div>-->
 </div>
 
-  <button (click)="searchRecipes()">Get Recipes</button>
-
-
-<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mx-10">
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mx-10 py-10">
   @for(recipe of recipes; track recipe){
-    
-    <article class="bg-white rounded-lg shadow-lg">
-      <div class="relative max-w-xl mx-auto">
-      <img class="w-full object-cover rounded-md" src="{{recipe.image}}" alt="{{recipe.label}}">
-      <div class="absolute inset-0 flex items-center justify-center">
-        <a href="/recipe/{{recipe.self | recipebyid}}" class="bg-black bg-opacity-50 p-2 rounded-full hover:bg-opacity-80 text-white text-xl font-bold">{{recipe.label}}</a>
-        </div>
-      </div>
-      <div class="p-4">
-        <p class="mt-2 text-gray-600">Time to cook: {{recipe.totalTime}}</p>
-      </div>
 
-    </article>
+  <article class="bg-white rounded-lg shadow-lg">
+    <div class="relative max-w-xl mx-auto">
+      <img
+        class="w-full object-cover rounded-md"
+        src="{{ recipe.image }}"
+        alt="{{ recipe.label }}"
+      />
+      <div class="absolute inset-0 flex items-center justify-center">
+        <a
+          href="/recipe/{{ recipe.self | recipebyid }}"
+          class="bg-black bg-opacity-50 p-2 rounded-full hover:bg-opacity-80 text-white text-xl font-bold"
+          >{{ recipe.label }}</a
+        >
+      </div>
+    </div>
+    <div class="p-4">
+      <p class="mt-2 text-gray-600">Time to cook: {{ recipe.totalTime }}</p>
+    </div>
+  </article>
   }@empty{
-    <p class="text-center text-gray-600"></p>
+  <p class="text-center text-gray-600"></p>
   }
 </div>
-
-
-

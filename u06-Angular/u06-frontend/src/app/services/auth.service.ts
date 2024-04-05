@@ -6,9 +6,48 @@ import { LoggedInUser } from '../interfaces/logged-in-user';
 import { Registerdetails } from '../interfaces/register';
 import { Login } from '../interfaces/login';
 import { User } from '../interfaces/user';
+import { RegisterComponent } from '../profile/register/register.component';
+import { Register } from '../models/register.model';
 
 
 
+export class AuthService {
+  private tokenState: BehaviorSubject<boolean>
+  constructor(private http: HttpClient) {
+    const initialTokenState = !!localStorage.getItem('token')
+    this.tokenState = new BehaviorSubject<boolean>(initialTokenState);
+  }
+  getTokenState(): Observable<boolean> {
+    return this.tokenState.asObservable();
+  }
+  updateTokenState(): void {
+    const hasToken = !!localStorage.getItem('token');
+    this.tokenState.next(hasToken);
+  }
+  postLogin(loginObj: Login) {
+    if (!loginObj) return
+    console.log(loginObj);
+    return this.http.post<any>('https://flavory-recipe-app.onrender.com/api/login', loginObj)
+  }
+  postRegister(registerObj: Register) {
+    if (!registerObj) return
+    console.log(registerObj);
+    return this.http.post<any>('https://flavory-recipe-app.onrender.com/api/register', registerObj)
+  }
+  postLogout(token: any) {
+    const headers = {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    }
+    console.log(headers);
+    return this.http.post<any>('https://flavory-recipe-app.onrender.com/api/logout', {}, {
+      headers
+    })
+  }
+}
+
+/*
 interface ResultData {
   token: string
 }
@@ -88,4 +127,4 @@ registerUser(form: any) {
     return throwError(() => new Error('Something bad happened; please try again later.'));
   }
 
-}
+}*/
