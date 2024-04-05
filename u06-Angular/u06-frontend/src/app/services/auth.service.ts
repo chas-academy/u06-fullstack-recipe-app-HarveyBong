@@ -28,12 +28,12 @@ export class AuthService {
   postLogin(loginObj: Login) {
     if (!loginObj) return
     console.log(loginObj);
-    return this.http.post<any>('http://localhost:4200/login', loginObj)
+    return this.http.post<any>('https://u06-fullstack-recipe-app-harveybong.onrender.com/api/login', loginObj)
   }
   postRegister(registerObj: Register) {
     if (!registerObj) return
     console.log(registerObj);
-    return this.http.post<any>('http://localhost:4200/register', registerObj)
+    return this.http.post<any>('https://u06-fullstack-recipe-app-harveybong.onrender.com/api/register', registerObj)
   }
   postLogout(token: any) {
     const headers = {
@@ -42,7 +42,7 @@ export class AuthService {
       'Authorization': `Bearer ${token}`
     }
     console.log(headers);
-    return this.http.post<any>('http://localhost:4200/logout', {}, {
+    return this.http.post<any>('https://u06-fullstack-recipe-app-harveybong.onrender.com/api/logout', {}, {
       headers
     })
   }
