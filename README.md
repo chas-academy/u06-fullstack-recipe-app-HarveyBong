@@ -1,1 +1,2 @@
-[![Netlify Status](https://api.netlify.com/api/v1/badges/4fcf035c-3594-4461-9eb1-37f431469a87/deploy-status)](https://app.netlify.com/sites/u06-recipe-harveybong/deploys)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/a6a0d550-cee0-4abe-aef2-0c561f85147e/deploy-status)](https://recipe-harveybong.netlify.app/)
+
