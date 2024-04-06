@@ -5,10 +5,10 @@ import { ProfileComponent } from './profile/profile.component';
 import { authGuard } from './guard/auth.guard';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './profile/register/register.component';
-import { AuthService } from './services/auth.service';
+
 export const routes: Routes = [
 
-    { path: 'search', component: RecipeSearchComponent },
+    { path: '', component: RecipeSearchComponent },
     { path: 'recipe/:id', component: RecipePageComponent },
     { path: 'profile', component: ProfileComponent, canActivate: [authGuard] },
     { path: 'login', component: LoginComponent },

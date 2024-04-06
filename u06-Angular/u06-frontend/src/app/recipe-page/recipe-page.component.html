@@ -1,41 +1,28 @@
-
-
-
-<article class="bg-white p-6 rounded-lg shadow-lg  ">
-    <div class="md:grid-cols-2 ">
-    <h2 class="text-2xl font-semibold">{{ recipe?.label }}</h2>
-    <img src="{{ recipe?.image }}" alt="{{ recipe?.label }}" class="mt-4 shadow-lg rounded-lg">
-    <div class="mt-4">
-        <strong>This food contains:</strong>
-        <p>{{ recipe?.cautions }}</p>
-    </div>
-    </div>
-    <div class="mt-4">
-
-        <strong>Ingredients:</strong>
-        <ul class="list-disc pl-4">
-            @for (line of recipe?.ingredientLines; track line){
-                <li>{{ line }}</li>
-            }
-        </ul>
-    </div>
-    <div class="mt-4">
-        <strong>Cooking time:</strong>
-        <p>{{ recipe?.totalTime }} minutes</p>
-        <p class="">CAUTIONS! WARINING: {{recipe?.healthLabels}} </p>
-    </div>
-    <div class="mt-4">
-        <strong>Global Kitchen:</strong>
-        <p class="tags">{{ recipe?.cuisineType }}</p>
-    </div>
-    <div class="mt-2">
-        <strong>Type of meal:</strong>
-        <p class="tags">{{ recipe?.mealType }}</p>
-        <p class="tags">{{ recipe?.dishType }}</p>
-    </div>
-    <div class="mt-4">
-        <p class="tags">{{ recipe?.instructions }}</p>
-        <p class="tags">{{ recipe?.tags }}</p>
-    </div>
-</article>
-
+<section class="bg-gray-100">
+  <div class="container mx-auto px-4 py-8 flex justify-center">
+    <article class="bg-white rounded-lg shadow-lg overflow-hidden p-6">
+      <h2 class="text-3xl font-semibold mb-2">{{ recipe?.health }}</h2>
+      <h2 class="text-3xl font-semibold mb-2">{{ recipe?.label }}</h2>
+      
+      <img src="{{ recipe?.image }}" alt="{{ recipe?.label }}" class="mb-4 rounded shadow " />
+      <p class="text-gray-700 mb-4">{{ recipe?.cautions }}</p>
+      <strong>Ingredients:</strong>
+      <ul class="list-disc list-inside mb-4">
+        @for (line of recipe?.ingredientLines; track line) {
+        <li>{{ line }}</li>
+        }
+      </ul>
+      <strong>Cooking time: </strong>
+      <p class="text-gray-700 mb-4">{{ recipe?.totalTime }} minutes</p>
+      <strong>Global Kitchen:</strong>
+      <p class="tags">{{ recipe?.cuisineType }}</p>
+     
+      <strong>Type of meal:</strong>
+      <p class="tags">{{ recipe?.mealType }}</p>
+      <p class="tags">{{ recipe?.dishType }}</p>
+      
+      <p class="tags">{{ recipe?.instructions }}</p>
+      <p class="tags">{{ recipe?.tags }}</p>
+    </article>
+  </div>
+</section>

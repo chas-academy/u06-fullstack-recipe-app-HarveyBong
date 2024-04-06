@@ -2,40 +2,48 @@ import { Component } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 
 import { AsyncPipe } from '@angular/common';
-import { Login} from '../models/login.model';
+
 import { Router } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { Logindetails } from '../interfaces/logindetails';
+import { LoggedInUser } from '../interfaces/logged-in-user';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [AsyncPipe,FormsModule,HttpClientModule],
+  imports: [AsyncPipe,FormsModule,HttpClientModule, ReactiveFormsModule,],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
-  loginObj: Login;
-  constructor(private router: Router, private authService: AuthService) {
-    this.loginObj = new Login();
-    console.log(this.loginObj);
+  loggedIn$: Observable<LoggedInUser>; // Listens to changes in auth login. Connected to the loggedIn service
+
+  constructor(private auth: AuthService, private router: Router) {
+    this.loggedIn$ = this.auth.loggedIn$;
   }
-  onLogin() {
-    this.authService.postLogin(this.loginObj)?.subscribe({
-      next: (res) => {
-        console.log(res);
-        if (res.token) {
-          localStorage.setItem('token', res.token);
-          this.authService.updateTokenState()
-          console.log(localStorage.getItem('token'));
 
-          alert('Login Success');
-          this.router.navigateByUrl('')
+  loginForm = new FormGroup({
+    email: new FormControl(''),
+    password: new FormControl(''),
+  });
 
-        } else {
-          alert(res.message);
-        }
-      }
-    })
-}
+  login() {
+    console.log('login-method');
+    const loginData = this.loginForm.value;
+    console.log(loginData);
+    this.auth.loginUser(loginData as Logindetails);
+    console.log('You are now logged in!');
+  }
+
+  /*   reRoute(route: string) {
+    if (this.loggedIn$) {
+      this.router.navigate([route]);
+    }
+  } */
+
+  logOut() {
+    this.auth.logoutUser();
+  }
 }
