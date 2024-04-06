@@ -1,7 +1,7 @@
 import { Component, NgModule } from '@angular/core';
 import { Registerdetails } from '../../interfaces/register';
 import { AuthService } from '../../services/auth.service';
-import {  FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {  FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { Register } from '../../models/register.model';
@@ -16,28 +16,27 @@ import { HttpClientModule } from '@angular/common/http';
 })
 
 export class RegisterComponent {
-  registerObj: Register;
-  constructor(private router: Router, private authService: AuthService) {
-    this.registerObj = new Register();
-  }
-  onRegister() {
-    console.log(this.registerObj);
-    this.authService.postRegister(this.registerObj)?.subscribe({
-      next: (res) => {
-        console.log(res);
-        if (res.token) {
-          localStorage.setItem('token', res.token);
+  constructor(private auth: AuthService) {}
 
-          console.log(localStorage.getItem('token'));
+  registerForm = new FormGroup({
+    name: new FormControl('', Validators.required),
+    email: new FormControl('', Validators.required),
+    password: new FormControl('', Validators.required),
+    password_confirmation: new FormControl('', Validators.required),
+  });
 
-          alert('Register Success');
-          this.router.navigateByUrl('/login')
+  password = this.registerForm.value.password;
+  password_confirmation = this.registerForm.value.password_confirmation;
 
-        } else {
-          alert(res.message);
-        }
-      }
-    })
+  register() {
+    console.log('register-method');
+    const registerData = this.registerForm.value;
+    console.log('...');
+    console.log(registerData);
+    this.auth
+      .registerUser(registerData as Registerdetails)
+      .subscribe((result) => {
+        console.log('Success', result);
+      });
   }
-  
-  }
+}

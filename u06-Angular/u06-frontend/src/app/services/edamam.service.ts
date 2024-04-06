@@ -7,52 +7,58 @@ import { RecipeSearchComponent } from '../recipe-search/recipe-search.component'
   providedIn: 'root'
 })
 export class EdamamService {
-
-  private baseUrl = 'https://api.edamam.com/api/recipes/v2?type=public';
-
   //'https://api.edamam.com/api/recipes/v2?type=public&q=chicken&app_id=a48ffb7f&app_key=%205957a6ea474c03ca1437ec73df657ae5&health=peanut-free&health=pescatarian&health=pork-free&mealType=Dinner'
 
+  private baseUrl = 'https://api.edamam.com/api/recipes/v2?type=public';
   private app_key = '5957a6ea474c03ca1437ec73df657ae5'
   private app_id = 'a48ffb7f'
 
-  private httpOptions= {
-
+  private httOptions = {
     headers: new HttpHeaders({
-      'accept' : 'application/json',
-      'Accept-Language': 'en'
-    })
-  }
- 
-  constructor(private http:HttpClient) { }
+      accept: 'application/json',
+      'Accept-Language': 'en',
+    }),
+  };
 
-  searchRecipes(
-    q: string,
-    cuisineType?: string,
-    mealType?: string
+  constructor(private http: HttpClient) {}
+
+
+  getRecipes(
+    searchterm = '',
+    cuisineType = '',
+    mealType = '',
+    dishType = ''
   ): Observable<any> {
-    cuisineType = '';
-    mealType = '';
-    let url =
-      this.baseUrl +
-      '&q=' +
-      q +
-      '&app_id=' +
-      this.app_id +
-      '&app_key=' +
-      this.app_key;
-    return this.http.get<any>(url, this.httpOptions);
-  }
-  
-  getRecipe(searchterm: string): Observable<any> {
-    
-    let cuisineType = 'American'
-    let mealType = 'Breakfast'
-    let url = this.baseUrl + '&q='+searchterm+ '&app_id='+this.app_id+'&app_key='+this.app_key+'&cuisineType='+cuisineType +'&mealType='+mealType; 
-    return this.http.get<any>(url, this.httpOptions);
+    let url = this.baseUrl;
+    if (searchterm) {
+      url +=
+        '&q=' +
+        searchterm +
+        '&app_id=' +
+        this.app_id +
+        '&app_key=' +
+        this.app_key;
+    } else {
+      url += '&app_id=' + this.app_id + '&app_key=' + this.app_key;
+    }
+
+    if (cuisineType) {
+      url += '&cuisineType=' + cuisineType;
+    }
+    if (mealType) {
+      url += '&mealType=' + mealType;
+    }
+    if (dishType) {
+      url += '&dishType=' + dishType;
+    }
+    console.log(url);
+
+    return this.http.get<any>(url, this.httOptions);
   }
 
-
-  getRecipeById(id?: string): Observable<any> {
+  getRecipe(id?: string): Observable<any> {
+    // returnera den sträng som skapas med sitt id
+    // Skapa en component som tar hand om en sak
     let url =
       'https://api.edamam.com/api/recipes/v2/' +
       id +
@@ -61,6 +67,9 @@ export class EdamamService {
       this.app_id +
       '&app_key=' +
       this.app_key;
-    return this.http.get<any>(url, this.httpOptions);
+    return this.http.get<any>(url, this.httOptions);
   }
+
+
 }
+
