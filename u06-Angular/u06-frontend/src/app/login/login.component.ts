@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 
 import { AsyncPipe } from '@angular/common';
-import { Login} from '../models/login.model';
+
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -13,12 +13,12 @@ import { Observable } from 'rxjs';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [AsyncPipe,FormsModule,HttpClientModule, ReactiveFormsModule],
+  imports: [AsyncPipe,FormsModule,HttpClientModule, ReactiveFormsModule,],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
-  loggedIn$: Observable<LoggedInUser>; // Listens to changes in auth login. Conected to the loggedIn service
+  loggedIn$: Observable<LoggedInUser>; // Listens to changes in auth login. Connected to the loggedIn service
 
   constructor(private auth: AuthService, private router: Router) {
     this.loggedIn$ = this.auth.loggedIn$;

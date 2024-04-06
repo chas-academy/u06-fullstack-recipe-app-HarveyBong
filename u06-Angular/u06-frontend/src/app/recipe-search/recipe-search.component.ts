@@ -1,76 +1,131 @@
-import { Component, OnInit, input } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { Router, RouterLink } from '@angular/router';
 import { EdamamService } from '../services/edamam.service';
-import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import {
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { RecipebyidPipe } from '../pipes/recipebyid.pipe';
-import { RecipeResponse } from '../interfaces/recipe';
+import { Recipe } from '../interfaces/recipe';
 
 @Component({
   selector: 'app-recipe-search',
   standalone: true,
-  imports: [FormsModule,CommonModule,RecipebyidPipe,RouterLink],
+  imports: [
+    FormsModule,
+    CommonModule,
+    RecipebyidPipe,
+    RouterLink,
+    NgOptimizedImage,
+    ReactiveFormsModule,
+  ],
   templateUrl: './recipe-search.component.html',
-  styleUrl: './recipe-search.component.css'
+  styleUrl: './recipe-search.component.css',
 })
+export class RecipeSearchComponent {
+  recipes?: Recipe[];
 
+  searchterm = '';
 
-export class RecipeSearchComponent implements OnInit{
+  health = [
+    '',
+    'egg-free',
+    'alcohol-free',
+    'dairy-free',
+    'mustard-free',
+    'peanut-free',
+  ];
+  cuisineTypes = [
+    '',
+    'American',
+    'Asian',
+    'British',
+    'Caribbean',
+    'Chinese',
+    'French',
+    'Indian',
+    'Italian',
+    'Japanese',
+    'Kosher',
+    'Mediterranean',
+    'Nordic',
+  ];
+  mealTypes = ['', 'Breakfast', 'Dinner', 'Lunch', 'Snack', 'Teatime'];
 
-  query: string = ''; //the user input
-  cuisineType: string = ''; // What country specific dish example 'American'
-  mealType: string = ''; // breakfast, lunch, dinner etc
-  health: string = ''; //allergy
-  recipes: any[] = [];
-  searchTerm: string = '';
-  recipe: RecipeResponse[] = [];
+  dishTypes = [
+    '',
+    'Bread',
+    'Cereals',
+    'Desserts',
+    'Drinks',
+    'Panncake',
+    'Preps',
+    'Preserve',
+    'Salad',
+    'Sandwiches',
+    'Soup',
+    'Starter',
+    'Sweets',
+  ];
 
-  constructor(
-    private edamamService:EdamamService,
-    private router:Router
-  ){}
+  constructor(private edamameService: EdamamService) {}
 
- userInput(input: string){
-  let query;
-  this.query=input;
-  return input;
- }
+  searchForm = new FormGroup({
+    searchterm: new FormControl(''),
+    mealType: new FormControl(''),
+    cuisineType: new FormControl(''),
+    dishType: new FormControl(''),
+    health: new FormControl(''),
+  });
 
-  ngOnInit(): void {}
+  searchData: any;
 
-  searchRecipes() {
-    this.edamamService.searchRecipes(this.searchTerm).subscribe((res) => {
-      console.table(res);
+  searchRecipe() {
+    this.searchData = this.searchForm.value;
+    let searchterm = this.searchData.searchterm;
+    let cuisineType = this.searchData.cuisineType;
+    let mealType = this.searchData.mealType;
+    let dishType = this.searchData.dishType;
+    let health = this.searchData.health;
 
-      let recipes: RecipeResponse[];
-      recipes = res.hits.map(
-        (item: {
-          recipe: {
-            label: any;
-            image: any;
-            ingredientLines: any;
-            totalTime: any;
-            yield: any;
-            cautions:any;
-            healthLabels:any;
-          };
-          _links: { self: { href: any } };
-        }) => {
-          return {
-            label: item.recipe.label,
-            image: item.recipe.image,
-            ingredientLines: item.recipe.ingredientLines,
-            totalTime: item.recipe.totalTime,
-            yield: item.recipe.yield,
-            self: item._links.self.href,
-            cautions: item.recipe.cautions,
-            healthLabels:item.recipe.healthLabels
-          };
-        }
-      );
-      console.log(recipes);
-      this.recipes = recipes;
-    });
+    console.log(this.searchData);
+    this.edamameService
+      .getRecipes(searchterm, cuisineType, mealType, dishType, health)
+      .subscribe((result) => {
+        console.table(result);
+
+        let recipes: Recipe[];
+        recipes = result.hits.map(
+          (item: {
+            recipe: {
+              label: any;
+              image: any;
+              ingredientLines: any;
+              totalTime: any;
+              yield: any;
+              mealType?: any;
+              health?: [];
+            };
+            _links: { self: { href: any } };
+          }) => {
+            return {
+              label: item.recipe.label,
+              image: item.recipe.image,
+              ingredientLines: item.recipe.ingredientLines,
+              totalTime: item.recipe.totalTime,
+              yield: item.recipe.yield,
+              mealType: item.recipe.mealType,
+              self: item._links.self.href,
+              health: item.recipe.health,
+            };
+          }
+        );
+        console.log(recipes);
+        this.recipes = recipes;
+      });
   }
 }

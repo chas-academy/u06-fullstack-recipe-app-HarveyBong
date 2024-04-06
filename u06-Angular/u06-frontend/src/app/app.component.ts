@@ -20,6 +20,9 @@ import { LoggedInUser } from './interfaces/logged-in-user';
 })
 
 export class AppComponent {
+  refresh() {
+    location.reload();
+  }
   title = 'u06-frontend';
 
 

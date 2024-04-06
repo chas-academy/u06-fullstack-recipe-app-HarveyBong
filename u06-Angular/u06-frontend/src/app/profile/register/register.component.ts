@@ -4,7 +4,7 @@ import { AuthService } from '../../services/auth.service';
 import {  FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
-import { Register } from '../../models/register.model';
+
 import { HttpClientModule } from '@angular/common/http';
 
 @Component({

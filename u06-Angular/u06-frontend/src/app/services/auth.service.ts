@@ -5,12 +5,13 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 
 
 
-import { Register } from '../models/register.model';
-import { Login } from '../models/login.model';
+
+
 import { User } from '../interfaces/user';
 import { LoggedInUser } from '../interfaces/logged-in-user';
 import { Router } from '@angular/router';
 import { Logindetails } from '../interfaces/logindetails';
+import { Registerdetails } from '../interfaces/register';
 
 
 interface ResultData {
@@ -52,7 +53,7 @@ private updateLoginState(loginState: LoggedInUser) {
   this.loggedIn.next(loginState);
 }
 
-registerUser(registerDetails: Register): Observable<ResultData> {
+registerUser(registerDetails: Registerdetails): Observable<ResultData> {
   return this.http
     .post<ResultData>(
       this.baseUrl + 'register',
