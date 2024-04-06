@@ -1,0 +1,14 @@
+<div class="container text-center mt-10">
+
+
+
+
+
+@if((loggedIn$ | async)?.loginState) {
+    <h2>Congratulations you're inlogged :P</h2>
+    <p>This page isnt accesible if you are logged out</p>
+    <p>the plan is to show saved recipes here in the future if time allows...</p>
+    <button class="bg-teal-700 hover:bg-teal-600 p-2 rounded-lg mt-10 text-white" (click)="logOut()">Logout</button>
+}@else{<p>Sorry you are currently logged out</p>}
+
+</div>

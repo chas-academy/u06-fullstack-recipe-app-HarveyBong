@@ -1,0 +1,42 @@
+
+
+<form class="max-w-md mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" [formGroup]="registerForm" (ngSubmit)="register()">
+  <div class="mb-4">
+  <label class="block text-gray-700 text-sm font-bold mb-2" for="name">
+    Username:
+    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" id="name" formControlName="name" />
+  </label>
+</div>
+<div>
+  <label class="block text-gray-700 text-sm font-bold mb-2" for="email">
+    E-mail:
+    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" id="email" formControlName="email" />
+  </label>
+</div>
+<div>
+
+
+  <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
+    Password:
+    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" id="password" formControlName="password" />
+  </label>
+
+</div>
+<div>
+  <label class="block text-gray-700 text-sm font-bold mb-2" for="password_confirmation">
+    Password:
+    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+      type="text"
+      id="password_confirmation"
+      formControlName="password_confirmation"
+    />
+  </label>
+</div>
+  @if (this.password === this.password_confirmation) {
+  <button class="bg-teal-700 hover:bg-teal-600 p-2 rounded-lg  w-full text-white" type="submit" [disabled]="!registerForm.valid">Register</button>
+  } @else {
+  <p>Passwords does not match</p>
+  }
+</form>
+
+

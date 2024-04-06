@@ -1,0 +1,64 @@
+
+<nav
+  class=" bg-teal-800  py-2 shadow-dark-mild lg:py-4"
+>
+  <div class=" h-10 flex w-full flex-wrap items-center gap-10 justify-center  px-3">
+    <div class="hover:bg-teal-700 p-2 rounded-lg  text-white">
+      <a
+        routerLink=""
+        routerLinkActive="active"
+        ariaCurrentWhenActive="page"
+        class=""
+        >Search recipe</a
+      >
+    </div>
+    @if((this.loggedIn$ | async)?.loginState ) {
+
+    <a
+      routerLink="/profile"
+      routerLinkActive="active"
+      ariaCurrentWhenActive="page"
+      class="hover:bg-teal-700 p-2 rounded-lg  text-white"
+    >
+      {{ (loggedIn$ | async)?.user?.name }}
+    </a>
+
+
+    } @else {
+
+     
+    <a
+      routerLink="/login"
+      routerLinkActive="active"
+      ariaCurrentWhenActive="page"
+      class="hover:bg-teal-700 p-2 rounded-lg  text-white"
+    >
+      Login
+    </a>
+      
+      
+    <a
+      routerLink="/register"
+      routerLinkActive="active"
+      ariaCurrentWhenActive="page"
+      class="hover:bg-teal-700 p-2 rounded-lg  text-white"
+    >
+      Register
+    </a>
+  
+  
+    <a
+      routerLink="/profile"
+      routerLinkActive="active"
+      ariaCurrentWhenActive="page"
+      class="hover:bg-teal-700 p-2 rounded-lg  text-white"
+    >
+      Profile
+    </a>
+  
+    }
+
+  </div>
+</nav>
+
+<router-outlet></router-outlet>
