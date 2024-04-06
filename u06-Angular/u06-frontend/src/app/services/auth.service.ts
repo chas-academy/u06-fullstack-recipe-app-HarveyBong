@@ -22,10 +22,48 @@ interface ResultData {
   providedIn: 'root',
 })
 
+
 export class AuthService { private loggedIn = new BehaviorSubject<LoggedInUser>({
   user: undefined,
   loginState: false,
 });
+
+export class AuthService {
+  private tokenState: BehaviorSubject<boolean>
+  constructor(private http: HttpClient) {
+    const initialTokenState = !!localStorage.getItem('token')
+    this.tokenState = new BehaviorSubject<boolean>(initialTokenState);
+  }
+  getTokenState(): Observable<boolean> {
+    return this.tokenState.asObservable();
+  }
+  updateTokenState(): void {
+    const hasToken = !!localStorage.getItem('token');
+    this.tokenState.next(hasToken);
+  }
+  postLogin(loginObj: Login) {
+    if (!loginObj) return
+    console.log(loginObj);
+    return this.http.post<any>('https://u06-fullstack-recipe-app-harveybong.onrender.com/api/login', loginObj)
+  }
+  postRegister(registerObj: Register) {
+    if (!registerObj) return
+    console.log(registerObj);
+    return this.http.post<any>('https://u06-fullstack-recipe-app-harveybong.onrender.com/api/register', registerObj)
+  }
+  postLogout(token: any) {
+    const headers = {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    }
+    console.log(headers);
+    return this.http.post<any>('https://u06-fullstack-recipe-app-harveybong.onrender.com/api/logout', {}, {
+      headers
+    })
+  }
+}
+
 
 private token: string = '';
 username: string = '';
